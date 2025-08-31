@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FDSN - Billing & Payments Agent Guide (Light Theme)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7fafc; /* Light background color */
+            color: #2d3748; /* Dark text color */
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        .accordion-content.active {
+            max-height: 1000px;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .question-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        }
+        .question-content.active {
+            max-height: 500px;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .option-button {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: 500;
+            background-color: #edf2f7;
+            color: #2d3748;
+            transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .option-button:hover {
+            background-color: #e2e8f0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .solution-box {
+            background-color: #ebf8ff;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 2px solid #90cdf4;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #718096;
+            background-color: #edf2f7;
+            border-radius: 9999px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .back-button:hover {
+            background-color: #e2e8f0;
+            color: #2d3748;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center">
+
+    <!-- Header Section -->
+    <header class="sticky top-0 w-full bg-white shadow-md p-4 text-center z-10 border-b border-gray-200">
+        <h1 class="text-3xl font-bold text-gray-800">FDSN - Billing & Payments Agent Guide</h1>
+        <p class="text-gray-500 mt-1">Use this guide when assisting customers with Billing and Payment Issues</p>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="w-full max-w-4xl p-6 mt-4 md:mt-8 border-4 border-blue-500 rounded-xl shadow-2xl bg-white bg-opacity-90">
+        <!-- Search Bar -->
+        <div class="mb-8">
+            <input type="text" id="search-bar" onkeyup="filterContent()" placeholder="Search for a topic or keyword..." class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 placeholder-gray-500 text-gray-800 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:border-transparent transition-all duration-200 shadow-sm">
+        </div>
+
+        <!-- Interactive Decision Tree Section -->
+        <div class="bg-gray-50 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl border border-gray-200 mb-8" id="decision-tree">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center" id="tree-question"></h2>
+            <div id="tree-options" class="flex flex-col gap-2"></div>
+            <div id="tree-solution" class="solution-box mt-4 hidden"></div>
+            <button id="back-button" class="back-button hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                Back
+            </button>
+        </div>
+
+        <!-- Accordion Guide Section -->
+        <div id="guide-content" class="space-y-4">
+            <!-- Common Questions -->
+            <div class="accordion-item bg-gray-50 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl border border-gray-200">
+                <button class="accordion-header w-full flex justify-between items-center text-left focus:outline-none">
+                    <h2 class="text-xl font-semibold text-gray-800">Common Billing Questions</h2>
+                    <span class="accordion-icon text-gray-500 transform transition-transform duration-300">+</span>
+                </button>
+                <div class="accordion-content text-gray-700">
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ How to update or change the card registered?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>Customers have to sign in to our website https://fanduelsportsnetwork.com/. Go to Account Settings, simply navigate to the 'Purchases' tab and click on 'Billing Details' to make the necessary changes.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Can we update their Card information in Evergent?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>Yes, we can update their existing card, but only the expiration date.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ How to change the payment method?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>Customers have to cancel and wait for their subscription to expire. Then subscribe again using their preferred payment method.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Which payment methods are supported?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>On Web, we accept Credit Cards (Mastercard, Visa, American Express) & Paypal<br>On Mobile, all payments methods supported by Apple Store and Google Play Store<br>On TVs, all payment methods supported by Apple Store, Google Play Store, Roku Pay and Amazon</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Can a customer change their due date or payment date?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>No, their due date is based on the subscription start date. If the customer insists on changing the payment date, they can re-subscribe on their preferred date.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Can a customer change the card associated with their App Store payment method?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>We can't manage their IAP subscription or wallet. Advise the customer that they can do that within their respective app store. You may refer the customer to their biller (Google, Apple, Roku, Amazon).</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Why does it show Bally Sports in my statement?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>Explain to the customer that FanDuel Sports Network was formerly Bally Sports. To confirm the payment is for their active FDSN subscription, check their account in Evergent.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ A customer was charged but they don't have a subscription</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>To help locate the account, ask the customer for specific details about the charge based on their payment method:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li><strong>Credit/Debit Card:</strong> The last 4 digits of the card and the expiration date.</li>
+                                <li><strong>Third-Party Biller (Apple, Google, Roku, Amazon):</strong> The payment reference number.</li>
+                                <li><strong>PayPal:</strong> The RefID.</li>
+                            </ul>
+                            <p class="mt-2">You can also try searching for any possible accounts using the customer's full name.</p>
+                            <p class="mt-2 font-semibold">Once you find the account:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li>If you found the account using a card or PayPal RefID, you can provide the email address associated with the account.</li>
+                                <li>If it's an IAP (In-App Purchase), you cannot provide the email address. Refer the customer back to their biller.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Trouble applying a promo code</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>If a customer is having trouble redeeming a promotional code, you should first check for common issues such as a code being expired, a typo, or the customer not meeting the eligibility requirements for the offer. </p>
+                            <p class="mt-4">You can also test the promo code on your end by following these steps:</p>
+                            <ol class="list-decimal list-inside mt-2 space-y-1">
+                                <li>Navigate to <a href="https://fanduelsportsnetwork.com/packages" class="text-blue-500 hover:underline" target="_blank">https://fanduelsportsnetwork.com/packages</a>.</li>
+                                <li>Enter the customer's zip code.</li>
+                                <li>On the right side of the screen, enter the promo code to see if the issue is a typo or other error.</li>
+                            </ol>
+                            <p class="mt-4">After troubleshooting, make sure to clearly communicate the reason the code isn't working and provide any alternative solutions if available.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Handling Payment Issues -->
+            <div class="accordion-item bg-gray-50 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl border border-gray-200">
+                <button class="accordion-header w-full flex justify-between items-center text-left focus:outline-none">
+                    <h2 class="text-xl font-semibold text-gray-800">Handling Payment Issues</h2>
+                    <span class="accordion-icon text-gray-500 transform transition-transform duration-300">+</span>
+                </button>
+                <div class="accordion-content text-gray-700">
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Why was a customer charged twice in the same month?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>First, check if the customer has two active subscriptions in Evergent. If they do, inform the customer and find out which one they want to keep. If it's the same subscription or package, you can proactively offer to cancel one of them for the customer.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Unexpected charge amount</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>A customer might notice a charge that is higher than their usual subscription fee. This is often due to:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li>A promotional period has ended.</li>
+                                <li>Taxes have been applied to the charge.</li>
+                                <li>The subscription has changed from a monthly to an annual plan.</li>
+                            </ul>
+                            <p class="mt-2">Check the customer's subscription in Evergent to confirm the reason, and clearly explain the change and what they can expect moving forward.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Card Declined - What's next?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>First, confirm the customer's card details with them and check if they match the ones in Evergent.</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li>If they match, advise them to contact their bank to approve the transaction. Let them know we will attempt to reprocess their payment, but if it fails after a few tries, their subscription will automatically be cancelled.</li>
+                                <li>If the card details don't match, inform the customer that we have a different card on file and advise them to update their payment details on our website.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Sample remarks in Evergent when payments get declined:</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li>Restricted Card - 25</li>
+                                <li>Not enough balance - 12</li>
+                                <li>Refused - 2</li>
+                                <li>Blocked Card - 5</li>
+                                <li>Invalid Card Number - 8</li>
+                                <li>Issuer Suspected Fraud - 31</li>
+                            </ul>
+                            <p class="mt-2">You will see these by checking the Payments section in Evergent, or in the History (click Payment Failure under Category, to view the comments or remarks).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Refunds and Credits -->
+            <div class="accordion-item bg-gray-50 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl border border-gray-200">
+                <button class="accordion-header w-full flex justify-between items-center text-left focus:outline-none">
+                    <h2 class="text-xl font-semibold text-gray-800">Refunds and Credit Memos</h2>
+                    <span class="accordion-icon text-gray-500 transform transition-transform duration-300">+</span>
+                </button>
+                <div class="accordion-content text-gray-700">
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Is a customer eligible for a refund?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>To determine if a customer is eligible for a refund, you must check the following criteria:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li>The customer must be within the grace period for their subscription type.</li>
+                                <li>The payment must have successfully gone through.</li>
+                                <li>The payment method must be a card or PayPal (IAP refunds must be handled by the respective app store).</li>
+                            </ul>
+                            <p class="mt-2 font-semibold">Grace periods for refunds:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li><strong>Monthly subscription:</strong> 7 days from the payment date.</li>
+                                <li><strong>Annual/Season Pass:</strong> 14 days from the payment date.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ How do I process a refund?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>Send your request to your SMEs. Use the Internal Request Macro in Zendesk. Make sure to provide all the necessary details to avoid back and forths.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ When can a customer expect their refund?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>Refund timelines depend on the customer's payment method:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li><strong>For card:</strong> 3-7 business days</li>
+                                <li><strong>For PayPal:</strong> Same Day</li>
+                                <li><strong>For Google Play:</strong> 3-7 business days</li>
+                            </ul>
+                            <p class="mt-2 text-sm italic"><strong>Note:</strong> Refunds processed by 3rd party billers (Roku, Amazon, Apple) are out of our scope. Please refer them to their biller.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ When to provide a credit or extension</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>We can provide a credit or extension in the following scenarios:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li><strong>For Known Outages:</strong></li>
+                                <ul class="list-disc list-inside mt-2 space-y-1 pl-4" style="list-style-type: circle;">
+                                  <li>7 or 14 days free extension, or</li>
+                                  <li>$5 credit for active subscribers who have PayPal or CC as a payment method. Subscription should not be on a free trial.</li>
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Refund Scenarios (Exceptions) -->
+            <div class="accordion-item bg-gray-50 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl border border-gray-200">
+                <button class="accordion-header w-full flex justify-between items-center text-left focus:outline-none">
+                    <h2 class="text-xl font-semibold text-gray-800">Other Refund Scenarios (Exceptions)</h2>
+                    <span class="accordion-icon text-gray-500 transform transition-transform duration-300">+</span>
+                </button>
+                <div class="accordion-content text-gray-700">
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Promised Refund</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>A full refund is approved if you found that the previous agent promised a refund for the customer.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Double Charge / Two Concurrent Subscriptions</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>A full refund is approved for up to 6 months that the second subscription was active.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Unsupported Device</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>A full refund is approved if the customer is within the first 14 days of their subscription.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Promo Code Not Applied</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>A full refund is approved if the subscription was activated within the past 6 months.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Did not have teams I wanted</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>A user purchased the subscription but we do not carry the team they wanted to watch. A full refund is approved if the subscription was activated within the past 30 days.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Team or Region No Longer Available</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>A pro-rated refund is approved from the time the coverage ceased.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Deceased Partner/Relative</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>A full refund is approved if the subscription was activated within the past 6-10 months.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ User Threats (Better Business Bureau, Attorney General)</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>A full refund is approved if the subscription was activated within the past 30 days.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ All Other Scenarios</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>All other refund scenarios are subject to approval and require an escalation to a supervisor or SME.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- New Section: Managing Subscription -->
+            <div class="accordion-item bg-gray-50 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl border border-gray-200">
+                <button class="accordion-header w-full flex justify-between items-center text-left focus:outline-none">
+                    <h2 class="text-xl font-semibold text-gray-800">Managing Subscription</h2>
+                    <span class="accordion-icon text-gray-500 transform transition-transform duration-300">+</span>
+                </button>
+                <div class="accordion-content text-gray-700">
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ What happens when a customer cancels their subscription?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>Upon cancellation, customers will receive a confirmation email sent to their registered email address. Their subscription will remain active until the end of the current billing cycle and will not automatically renew after the validity date.</p>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ Can a customer change their plan (upgrade/downgrade)?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>Yes, a customer can change their plan:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li>If they **downgrade**, the change will take effect at the end of their current billing period.</li>
+                                <li>If they **upgrade**, the change will take effect immediately. Any remaining days from their previous plan will be applied to their new subscription, extending its validity date.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="question-item mt-4">
+                        <button class="question-header w-full flex justify-between items-center text-left font-bold text-gray-800 focus:outline-none">
+                            <span>➔ How does a customer check their next payment date?</span>
+                            <span class="text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="question-content text-gray-700 pl-4">
+                            <p>A customer can check their next billing date by logging into their account online. They should go to Account Settings and click on the 'Purchases' tab. Their next payment date and billing history will be listed there.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const decisionTree = {
+            id: 'start',
+            question: "What is the primary issue the customer is facing?",
+            options: [
+                { text: "My card was declined.", next: 'card_declined' },
+                { text: "I have an unexpected or double charge.", next: 'unexpected_charge_type' },
+                { text: "I want a refund.", next: 'refund_request' },
+            ]
+        };
+
+        const treeNodes = {
+            'card_declined': {
+                id: 'card_declined',
+                solution: `<p>First, confirm the customer's card details with them and check if they match the ones in Evergent.</p><ul class="list-disc list-inside mt-2 space-y-1"><li>If they match, advise them to contact their bank to approve the transaction. Let them know we will attempt to reprocess their payment, but if it fails after a few tries, their subscription will automatically be cancelled.</li><li>If the card details don't match, inform the customer that we have a different card on file and advise them to update their payment details on our website.</li></ul><p class="mt-2 text-sm italic">You can also check the "Payments" or "History" section in Evergent for specific decline remarks from the payment provider (e.g., "Restricted Card," "Insufficient Funds").</p>`
+            },
+            'unexpected_charge_type': {
+                id: 'unexpected_charge_type',
+                question: "What kind of unexpected charge is it?",
+                options: [
+                    { text: "It's a double charge.", next: 'double_charge_solution' },
+                    { text: "It's a charge for a subscription I didn't have.", next: 'no_subscription_solution' },
+                    { text: "The amount is different than expected.", next: 'unexpected_amount_solution' },
+                ]
+            },
+            'double_charge_solution': {
+                id: 'double_charge_solution',
+                solution: `<p>First, check if the customer has two active subscriptions in Evergent. Advise them to check if both are for the same package.</p><ul class="list-disc list-inside mt-2 space-y-1"><li>If they are the <strong>same package</strong>, proactively cancel one of the subscriptions for the customer. A full refund for up to 6 months is approved for the canceled subscription.</li><li>If they are <strong>different packages</strong>, ask the customer which package they want to keep. The standard refund grace period will apply for the package they choose to cancel.</li></ul>`
+            },
+            'no_subscription_solution': {
+                id: 'no_subscription_solution',
+                solution: `<p>To help locate the account, ask for specific details about the charge based on their payment method:</p><ul class="list-disc list-inside mt-2 space-y-1"><li><strong>Credit/Debit Card:</strong> The last 4 digits and expiration date.</li><li><strong>Third-Party Biller (Apple, Google, etc.):</strong> The payment reference number.</li><li><strong>PayPal:</strong> The RefID.</li></ul><p class="mt-2">Once located, you can provide the email associated with the account. If it's an In-App Purchase (IAP), you cannot provide the email address and should refer the customer back to their biller.</p>`
+            },
+            'unexpected_amount_solution': {
+                id: 'unexpected_amount_solution',
+                solution: `<p>Check for these common reasons:</p><ul class="list-disc list-inside mt-2 space-y-1"><li>A promotional period has ended.</li><li>The subscription has changed (e.g., from monthly to annual).</li><li>Taxes have been applied to the charge.</li></ul><p class="mt-2">For an unexpected charge, explain the reason and what to expect moving forward.</p>`
+            },
+            'refund_request': {
+                id: 'refund_request',
+                solution: `<p>To determine eligibility, check for the following:</p><ul class="list-disc list-inside mt-2 space-y-1"><li>The customer is within the grace period (7 days for monthly, 14 days for annual).</li><li>The payment method is a card or PayPal (IAP refunds are handled by the app store).</li></ul><p class="mt-2">You can find all approved refund scenarios and exceptions in the <a href="#refunds-section" class="text-blue-500 hover:underline">Refunds and Credit Memos</a> section below.</p>`
+            }
+        };
+
+        const treeQuestionEl = document.getElementById('tree-question');
+        const treeOptionsEl = document.getElementById('tree-options');
+        const treeSolutionEl = document.getElementById('tree-solution');
+        const backButtonEl = document.getElementById('back-button');
+
+        let history = [];
+
+        function renderNode(node) {
+            // Check if the node is valid before trying to render
+            if (!node) {
+                console.error('Node not found:', node);
+                return;
+            }
+
+            treeQuestionEl.textContent = node.question || '';
+            treeSolutionEl.innerHTML = node.solution || '';
+            treeOptionsEl.innerHTML = '';
+            
+            if (node.solution) {
+                // If it's a solution node, show the solution and hide options
+                treeSolutionEl.classList.remove('hidden');
+                treeOptionsEl.classList.add('hidden');
+            } else {
+                // If it's a question node, show options and hide solution
+                treeSolutionEl.classList.add('hidden');
+                treeOptionsEl.classList.remove('hidden');
+                node.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option.text;
+                    button.classList.add('option-button', 'w-full', 'text-left');
+                    button.addEventListener('click', () => {
+                        // Push the current node's ID to the history before rendering the next one
+                        history.push(node.id);
+                        const nextNode = treeNodes[option.next];
+                        renderNode(nextNode);
+                    });
+                    treeOptionsEl.appendChild(button);
+                });
+            }
+
+            backButtonEl.classList.toggle('hidden', history.length === 0);
+        }
+
+        backButtonEl.addEventListener('click', () => {
+            const lastNodeId = history.pop();
+            // Go back to the 'start' node if history is empty, otherwise get the previous node
+            const previousNode = lastNodeId === 'start' ? decisionTree : treeNodes[lastNodeId];
+            renderNode(previousNode);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNode(decisionTree);
+        });
+
+        // JavaScript for section accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('.accordion-icon');
+                content.classList.toggle('active');
+                icon.classList.toggle('rotate-45');
+
+                accordionHeaders.forEach(otherHeader => {
+                    if (otherHeader !== header) {
+                        const otherContent = otherHeader.nextElementSibling;
+                        const otherIcon = otherHeader.querySelector('.accordion-icon');
+                        otherContent.classList.remove('active');
+                        otherIcon.classList.remove('rotate-45');
+                    }
+                });
+            });
+        });
+
+        // JavaScript for individual question accordion functionality
+        const questionHeaders = document.querySelectorAll('.question-header');
+        questionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('span:last-child');
+                content.classList.toggle('active');
+                icon.classList.toggle('rotate-45');
+                
+                // Close other open questions in the same section
+                const parentSection = header.closest('.accordion-content');
+                parentSection.querySelectorAll('.question-header').forEach(otherHeader => {
+                    if (otherHeader !== header) {
+                        const otherContent = otherHeader.nextElementSibling;
+                        const otherIcon = otherHeader.querySelector('span:last-child');
+                        otherContent.classList.remove('active');
+                        otherIcon.classList.remove('rotate-45');
+                    }
+                });
+            });
+        });
+
+        // JavaScript for search functionality
+        function filterContent() {
+            const searchInput = document.getElementById('search-bar').value.toLowerCase();
+            const items = document.querySelectorAll('.accordion-item');
+
+            const keywordSynonyms = {
+                'refused': ['declined', 'card declined'],
+                'declined': ['refused', 'card declined'],
+                'refund': ['refund', 'refunds', 'credit memo', 'credit', 'payment', 'timeline'],
+                'grace period': ['grace period', 'refund eligibility', 'monthly refund', 'annual refund'],
+                'monthly': ['monthly subscription', 'monthly'],
+                'annual': ['annual subscription', 'annual', 'season pass'],
+                'cancel': ['cancellation', 'cancel']
+            };
+
+            const userKeywords = searchInput.split(' ').filter(word => word.length > 0);
+            let searchKeywords = [...userKeywords];
+
+            userKeywords.forEach(keyword => {
+                if (keywordSynonyms[keyword]) {
+                    searchKeywords = [...new Set([...searchKeywords, ...keywordSynonyms[keyword]])];
+                }
+            });
+
+            items.forEach(item => {
+                const sectionHeader = item.querySelector('.accordion-header h2').textContent.toLowerCase();
+                const questionItems = item.querySelectorAll('.question-item');
+                let sectionHasMatch = false;
+
+                // Close all questions and sections initially when a search is performed
+                questionItems.forEach(questionItem => {
+                    const questionContent = questionItem.querySelector('.question-content');
+                    const questionIcon = questionItem.querySelector('button span:last-child');
+                    questionContent.classList.remove('active');
+                    questionIcon.classList.remove('rotate-45');
+                });
+                
+                // Check each question within the section
+                questionItems.forEach(questionItem => {
+                    const questionHeader = questionItem.querySelector('.question-header');
+                    const questionText = questionHeader.textContent.toLowerCase();
+                    const questionContent = questionItem.querySelector('.question-content');
+                    const questionIcon = questionHeader.querySelector('span:last-child');
+                    
+                    let questionMatches = false;
+                    if (searchKeywords.length > 0) {
+                        // Check if any keyword matches the question or its content
+                        questionMatches = searchKeywords.some(keyword => {
+                            return questionText.includes(keyword) || questionContent.textContent.toLowerCase().includes(keyword);
+                        });
+                    } else {
+                        // If no search input, show all questions
+                        questionMatches = true;
+                    }
+
+                    if (questionMatches) {
+                        questionItem.style.display = 'block'; // Show the question item
+                        sectionHasMatch = true;
+                    } else {
+                        questionItem.style.display = 'none'; // Hide the question item
+                    }
+                });
+
+                // Show/hide the main section based on if any question inside it matched
+                if (sectionHasMatch) {
+                    item.style.display = 'block';
+                    // Open the parent section if it contains a matching question
+                    const parentContent = item.querySelector('.accordion-content');
+                    const parentIcon = item.querySelector('.accordion-icon');
+                    parentContent.classList.add('active');
+                    parentIcon.classList.add('rotate-45');
+                } else {
+                    item.style.display = 'none';
+                    const parentContent = item.querySelector('.accordion-content');
+                    const parentIcon = item.querySelector('.accordion-icon');
+                    parentContent.classList.remove('active');
+                    parentIcon.classList.remove('rotate-45');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
